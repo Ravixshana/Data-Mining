@@ -42,8 +42,8 @@ This project focuses on **data preprocessing, feature selection, model training,
 ## 📊 Results & Best Model
 | Model                | Accuracy | Precision | Recall  | F1-Score |
 |----------------------|----------|-----------|---------|----------|
-| **Gradient Boosting** | **0.6845** | High      | High    | **Best** |
-| SVM                 | 0.6753   | Moderate  | 0.6634  | Good     |
+| Gradient Boosting | 0.753909 | 0.702541      | 0.675012    | 0.684548 |
+| SVM                 | 0.754577   | 0.705123  | 0.663434  | 0.675290     |
 
 **🏆 Gradient Boosting was the best-performing model**, balancing precision and recall effectively.
 
