@@ -1,51 +1,98 @@
 # Data-Mining
 
-# 🚬 Smoker Status Prediction System (Production-Level ML Project)
+# 🚬 Smoker Status Prediction — Production ML System
 
 ## 📌 Overview
 
-This project builds a **production-ready machine learning system** to predict smoker status using bio-signal data. It goes beyond model training by implementing a **complete ML pipeline, API service, and deployment-ready architecture**.
+This project builds a **production-ready machine learning system** to predict smoker status using bio-signal data.
+It goes beyond a typical ML notebook by implementing a **complete pipeline**, **model comparison**, and a **deployable FastAPI service**.
 
-The system leverages structured health data to classify individuals as smokers or non-smokers, combining **data preprocessing, feature engineering, model selection, and real-time inference via FastAPI**.
-
----
-
-## 🧠 Key Features
-
-* ✅ End-to-end ML pipeline (data → model → API)
-* ✅ Multiple model comparison with cross-validation
-* ✅ Best model selection based on F1-score
-* ✅ Production-ready FastAPI service
-* ✅ Named feature input (industry-standard API design)
-* ✅ Feature validation & error handling
-* ✅ Model persistence using `joblib`
-* ✅ Clean, modular project structure
+The goal is to demonstrate **end-to-end ML engineering skills** — from data preprocessing to API deployment.
 
 ---
 
-## ⚙️ ML Pipeline
+## 🧠 Problem Statement
 
-### 1️⃣ Data Preprocessing
+Given a set of physiological and medical features (bio-signals), predict whether a person is a **smoker or non-smoker**.
 
-* Merged train & test datasets
-* Removed duplicates and missing values
-* Outlier detection using IQR method
-* Standardized feature names for production usage
-* Feature scaling using `StandardScaler` (within pipeline)
+This is a **binary classification problem** with real-world applications in:
 
----
-
-### 2️⃣ Feature Engineering
-
-* Removed highly correlated features
-* Encoded target variable using `LabelEncoder`
-* Preserved feature schema for API consistency
+* Healthcare analytics
+* Risk assessment systems
+* Preventive medical diagnostics
 
 ---
 
-### 3️⃣ Model Training & Evaluation
+## ⚙️ Tech Stack
 
-Trained and evaluated multiple models:
+**Languages & Libraries**
+
+* Python
+* Pandas, NumPy
+* Scikit-learn
+
+**ML & Engineering**
+
+* Pipeline (ColumnTransformer + StandardScaler)
+* Cross-validation
+* Feature engineering (outlier removal, correlation filtering)
+
+**Backend**
+
+* FastAPI
+* Pydantic (schema validation)
+
+**Tools**
+
+* Git & GitHub
+* Uvicorn
+
+---
+
+## 🚀 Key Features
+
+✔ End-to-end ML pipeline
+✔ Cleaned & standardized feature engineering
+✔ Correlation-based feature selection
+✔ Multiple model training & comparison
+✔ Cross-validation (5-fold)
+✔ Production-ready FastAPI API
+✔ Named feature input (industry standard)
+✔ Robust input validation
+✔ Reproducible model artifacts
+
+---
+
+## 📊 Dataset
+
+* Source: Kaggle
+* Type: Bio-signal dataset
+* Features include:
+
+  * Age, height, weight
+  * Blood pressure (systolic, relaxation)
+  * Cholesterol, glucose, triglycerides
+  * Liver enzymes (AST, ALT, GTP)
+  * Dental and hearing metrics
+
+---
+
+## 🧪 ML Pipeline
+
+### 1. Data Preprocessing
+
+* Removed duplicates and null values
+* Outlier removal using IQR method
+* Standardized numerical features
+
+### 2. Feature Engineering
+
+* Cleaned feature names (API-safe format)
+* Removed highly correlated features (>0.8 threshold)
+
+### 3. Model Training
+
+Trained multiple models:
 
 * Logistic Regression
 * Random Forest
@@ -54,48 +101,47 @@ Trained and evaluated multiple models:
 * K-Nearest Neighbors (KNN)
 * Decision Tree
 
-Evaluation method:
+### 4. Evaluation Metrics
 
-* 5-fold Cross Validation
-* Metrics: Accuracy, Precision, Recall, F1-score
-
----
-
-### 📊 Model Performance
-
-| Model             | Accuracy | Precision | Recall | F1-score   |
-| ----------------- | -------- | --------- | ------ | ---------- |
-| Gradient Boosting | 0.7578   | 0.7077    | 0.6788 | **0.6887** |
-| SVM               | 0.7587   | 0.7112    | 0.6668 | 0.6793     |
-| Random Forest     | 0.7500   | 0.6975    | 0.6593 | 0.6704     |
-
-🏆 **Best Model:** Gradient Boosting
+* Accuracy
+* Precision
+* Recall
+* F1-score
 
 ---
 
-## 🚀 FastAPI Inference Service
+## 📈 Model Performance
 
-The trained model is deployed using **FastAPI** for real-time predictions.
+| Model             | Accuracy | Precision | Recall | F1 Score  |
+| ----------------- | -------- | --------- | ------ | --------- |
+| Gradient Boosting | ~0.75    | ~0.70     | ~0.67  | **~0.69** |
+| SVM               | ~0.75    | ~0.71     | ~0.66  | ~0.68     |
+| Random Forest     | ~0.75    | ~0.69     | ~0.65  | ~0.67     |
 
-### ▶️ Run API
+🏆 **Best Model: Gradient Boosting** (balanced performance)
+
+
+---
+
+## 🔌 API Usage
+
+### Run Locally
 
 ```bash
+pip install -r requirements.txt
+python train.py
 uvicorn src.api.app:app --reload
 ```
 
-### 🌐 API Docs
+---
 
-```
-http://127.0.0.1:8000/docs
-```
+### Endpoint
+
+**POST** `/predict`
 
 ---
 
-## 📡 API Usage
-
-### 🔹 Endpoint: `/predict`
-
-### ✅ Example Request
+### Input (Named Features)
 
 ```json
 {
@@ -125,7 +171,9 @@ http://127.0.0.1:8000/docs
 }
 ```
 
-### ✅ Response
+---
+
+### Output
 
 ```json
 {
@@ -135,31 +183,31 @@ http://127.0.0.1:8000/docs
 
 ---
 
-## 🔐 Production Highlights
+## 🧠 Key Learnings
 
-* ✔ Feature schema validation (prevents input errors)
-* ✔ Consistent feature ordering using `features.pkl`
-* ✔ End-to-end pipeline (no data leakage)
-* ✔ Logging for training and API requests
-* ✔ Scalable architecture for deployment
-
----
-
-## 🔍 Future Improvements
-
-* 🔹 Hyperparameter tuning (GridSearch / Optuna)
-* 🔹 Deep learning models (PyTorch / TensorFlow)
-* 🔹 Model monitoring & drift detection
-* 🔹 Docker containerization
-* 🔹 Cloud deployment (AWS / Render / Azure)
-* 🔹 CI/CD pipeline integration
+* Importance of **pipeline-based preprocessing**
+* Avoiding **data leakage in ML systems**
+* Designing **robust and scalable APIs**
+* Handling **feature consistency in production**
+* Building **end-to-end ML workflows**
 
 ---
 
-## 🎓 Acknowledgments
+## 🚀 Future Improvements
 
-* University of Jaffna
-* Kaggle Dataset: Smoker Status Prediction using Bio-Signals
+* Hyperparameter tuning (GridSearch / Optuna)
+* Deep learning models
+* Model monitoring & logging
+* Deployment (Render / AWS / Docker)
+* MLflow integration
+
+---
+
+## 👤 Author
+
+**Ravixshana Atputharavi**
+BSc Eng (Hons) in Computer Engineering
+University of Jaffna
 
 ---
 
