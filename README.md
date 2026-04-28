@@ -1,59 +1,168 @@
 # Data-Mining
- Binary prediction of smoker status bio-signals
 
-## 📌 Introduction
-This project focuses on **data preprocessing, feature selection, model training, and evaluation** for a classification problem. The dataset, sourced from Kaggle, consists of `train_dataset.csv` and `test_dataset.csv`. The primary objective is to compare multiple machine learning models and determine the most effective one for classification.
+# 🚬 Smoker Status Prediction System (Production-Level ML Project)
 
-## 🚀 Workflow
-### 1️⃣ Data Download and Preprocessing
-- **Downloaded** `train_dataset.csv` and `test_dataset.csv` using Kaggle API.
-- **Merged** train and test datasets for preprocessing.
-- **Explored** dataset structure (`.info()`, `.head()`), checked for missing values and duplicates.
-- **Cleaned** dataset by removing duplicates and handling null values.
-- **Detected & removed outliers** using **Interquartile Range (IQR)**.
-- **Standardized** numerical features using **StandardScaler** (important for models like SVM and Logistic Regression).
+## 📌 Overview
+
+This project builds a **production-ready machine learning system** to predict smoker status using bio-signal data. It goes beyond model training by implementing a **complete ML pipeline, API service, and deployment-ready architecture**.
+
+The system leverages structured health data to classify individuals as smokers or non-smokers, combining **data preprocessing, feature engineering, model selection, and real-time inference via FastAPI**.
+
+---
+
+## 🧠 Key Features
+
+* ✅ End-to-end ML pipeline (data → model → API)
+* ✅ Multiple model comparison with cross-validation
+* ✅ Best model selection based on F1-score
+* ✅ Production-ready FastAPI service
+* ✅ Named feature input (industry-standard API design)
+* ✅ Feature validation & error handling
+* ✅ Model persistence using `joblib`
+* ✅ Clean, modular project structure
+
+---
+
+## ⚙️ ML Pipeline
+
+### 1️⃣ Data Preprocessing
+
+* Merged train & test datasets
+* Removed duplicates and missing values
+* Outlier detection using IQR method
+* Standardized feature names for production usage
+* Feature scaling using `StandardScaler` (within pipeline)
+
+---
 
 ### 2️⃣ Feature Engineering
-- **Correlation-based filtering** to remove highly correlated features.
-- **Dropped unnecessary columns**.
-- **Encoded categorical target variables** using **LabelEncoder**.
+
+* Removed highly correlated features
+* Encoded target variable using `LabelEncoder`
+* Preserved feature schema for API consistency
+
+---
 
 ### 3️⃣ Model Training & Evaluation
-- **Split dataset** into training and testing sets.
-- **Trained multiple models:**
-  - Logistic Regression
-  - Random Forest
-  - Gradient Boosting
-  - Support Vector Machine (SVM)
-  - K-Nearest Neighbors (K-NN)
-  - Naïve Bayes
-  - Decision Tree
-- **Performed Cross-Validation** (5-fold) to evaluate models.
-- **Used scoring metrics:**
-  - Accuracy
-  - Precision
-  - Recall
-  - F1-score
 
-### 4️⃣ Model Performance & Visualization
-- Compared models based on classification metrics.
-- Visualized model performance using plots and graphs.
+Trained and evaluated multiple models:
 
-## 📊 Results & Best Model
-| Model                | Accuracy | Precision | Recall  | F1-Score |
-|----------------------|----------|-----------|---------|----------|
-| Gradient Boosting | 0.753909 | 0.702541      | 0.675012    | 0.684548 |
-| SVM                 | 0.754577   | 0.705123  | 0.663434  | 0.675290     |
+* Logistic Regression
+* Random Forest
+* Gradient Boosting
+* Support Vector Machine (SVM)
+* K-Nearest Neighbors (KNN)
+* Decision Tree
 
-**🏆 Gradient Boosting was the best-performing model**, balancing precision and recall effectively.
+Evaluation method:
+
+* 5-fold Cross Validation
+* Metrics: Accuracy, Precision, Recall, F1-score
+
+---
+
+### 📊 Model Performance
+
+| Model             | Accuracy | Precision | Recall | F1-score   |
+| ----------------- | -------- | --------- | ------ | ---------- |
+| Gradient Boosting | 0.7578   | 0.7077    | 0.6788 | **0.6887** |
+| SVM               | 0.7587   | 0.7112    | 0.6668 | 0.6793     |
+| Random Forest     | 0.7500   | 0.6975    | 0.6593 | 0.6704     |
+
+🏆 **Best Model:** Gradient Boosting
+
+---
+
+## 🚀 FastAPI Inference Service
+
+The trained model is deployed using **FastAPI** for real-time predictions.
+
+### ▶️ Run API
+
+```bash
+uvicorn src.api.app:app --reload
+```
+
+### 🌐 API Docs
+
+```
+http://127.0.0.1:8000/docs
+```
+
+---
+
+## 📡 API Usage
+
+### 🔹 Endpoint: `/predict`
+
+### ✅ Example Request
+
+```json
+{
+  "data": {
+    "age": 45,
+    "heightcm": 170,
+    "weightkg": 70,
+    "waistcm": 80,
+    "eyesight_left": 1.0,
+    "eyesight_right": 1.0,
+    "hearing_left": 1,
+    "hearing_right": 1,
+    "systolic": 120,
+    "relaxation": 80,
+    "fasting_blood_sugar": 90,
+    "cholesterol": 180,
+    "triglyceride": 150,
+    "hdl": 50,
+    "hemoglobin": 14,
+    "urine_protein": 1,
+    "serum_creatinine": 1.0,
+    "ast": 20,
+    "alt": 25,
+    "gtp": 30,
+    "dental_caries": 0
+  }
+}
+```
+
+### ✅ Response
+
+```json
+{
+  "prediction": "smoker"
+}
+```
+
+---
+
+## 🔐 Production Highlights
+
+* ✔ Feature schema validation (prevents input errors)
+* ✔ Consistent feature ordering using `features.pkl`
+* ✔ End-to-end pipeline (no data leakage)
+* ✔ Logging for training and API requests
+* ✔ Scalable architecture for deployment
+
+---
 
 ## 🔍 Future Improvements
-- **Deep Learning Models:** Using neural networks to enhance prediction accuracy.
-- **Feature Expansion:** Incorporating lifestyle, genetic, or environmental data.
-- **Hyperparameter Tuning:** Optimizing models with Grid Search or Random Search.
 
-## ⭐ Acknowledgments
-- **University Of Jaffna**
-- **Datasets from Kaggle**
+* 🔹 Hyperparameter tuning (GridSearch / Optuna)
+* 🔹 Deep learning models (PyTorch / TensorFlow)
+* 🔹 Model monitoring & drift detection
+* 🔹 Docker containerization
+* 🔹 Cloud deployment (AWS / Render / Azure)
+* 🔹 CI/CD pipeline integration
 
-If you find this project useful, **leave a star ⭐ on GitHub!**
+---
+
+## 🎓 Acknowledgments
+
+* University of Jaffna
+* Kaggle Dataset: Smoker Status Prediction using Bio-Signals
+
+---
+
+## ⭐ Support
+
+If you found this project useful, consider giving it a ⭐ on GitHub!
